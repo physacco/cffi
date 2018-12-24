@@ -158,6 +158,13 @@ if 'darwin' in sys.platform:
         if p.wait() == 0:
             include_dirs.append(t + '/usr/include/ffi')
 
+python3_libs = subprocess.check_output(['python3-config',  '--libs']).decode('utf-8').strip().split(' ')
+for item in python3_libs:
+    if not item:
+        continue
+    if item.index('-l') == 0:
+        item = item[2:]
+    libraries.append(item)
 
 
 if __name__ == '__main__':
